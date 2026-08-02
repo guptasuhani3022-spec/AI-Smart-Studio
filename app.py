@@ -1,10 +1,26 @@
+import os
+import sys
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-from modules.sentiment import analyze_sentiment
-from modules.summarizer import generate_extractive_summary, summarize_with_api
-from modules.generator import generate_short_content
+# Fix Import Paths for Streamlit Cloud & Nested Folders
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+try:
+    from modules.sentiment import analyze_sentiment
+    from modules.summarizer import generate_extractive_summary, summarize_with_api
+    from modules.generator import generate_short_content
+except ImportError:
+    try:
+        from sentiment import analyze_sentiment
+        from summarizer import generate_extractive_summary, summarize_with_api
+        from generator import generate_short_content
+    except ImportError:
+        from ai_streamlit_app.modules.sentiment import analyze_sentiment
+        from ai_streamlit_app.modules.summarizer import generate_extractive_summary, summarize_with_api
+        from ai_streamlit_app.modules.generator import generate_short_content
 
 # Page Config
 st.set_page_config(
